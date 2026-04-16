@@ -1,4 +1,14 @@
-import streamlit as st
+def map_label(label):
+    label = label.lower()
+
+    if "bottle" in label:
+        return "Flasche"
+    elif "pen" in label:
+        return "Stift"
+    elif "box" in label:
+        return "Brotdose"
+    else:
+        return "Unbekannt"import streamlit as st
 from transformers import pipeline
 from PIL import Image
 
@@ -20,7 +30,9 @@ if uploaded_file:
 
     st.write("🔍 Analysiere Bild...")
 
-    result = classifier(image)
+    result = classifier(image)mapped = map_label(result[0]['label'])
+st.write("➡️ Erkannt als:", mapped)
+    
 
     # Top 3 Ergebnisse anzeigen
     for r in result[:3]:
